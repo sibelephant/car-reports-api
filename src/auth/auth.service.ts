@@ -29,7 +29,9 @@ export class AuthService {
     });
 
     await this.usersRepository.save(user);
-    return { access_token: this.jwtService.sign({ sub: user.id }) };
+    return { access_token: this.jwtService.sign({ sub: user.id }),
+     "message":"user has successfully signed up",
+  };
   }
 
   async signin(signInDto: SignInDto) {
@@ -40,6 +42,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    return { access_token: this.jwtService.sign({ sub: user.id }) };
+    return { access_token: this.jwtService.sign({ sub: user.id }),
+     "message":"user has successfully signed in" };
   }
 }

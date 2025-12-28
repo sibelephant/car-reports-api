@@ -10,7 +10,7 @@ export class ReportsService {
   constructor(
     @InjectRepository(Report)
     private reportsRepository: Repository<Report>,
-  ) {}
+  ) { }
 
   async create(createReportDto: CreateReportDto, user: User) {
     const report = this.reportsRepository.create({
@@ -25,7 +25,7 @@ export class ReportsService {
     return this.reportsRepository.find({ where, relations: ['user'] });
   }
 
-  async update(id: number, updateReportDto: UpdateReportDto) {
+  async update(id: string, updateReportDto: UpdateReportDto) {
     await this.reportsRepository.update(id, updateReportDto);
     return this.reportsRepository.findOne({ where: { id } });
   }

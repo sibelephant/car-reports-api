@@ -22,7 +22,7 @@ import { User } from "../users/user.entity";
 
 @Controller("reports")
 export class ReportsController {
-  constructor(private reportsService: ReportsService) {}
+  constructor(private reportsService: ReportsService) { }
 
   @Post()
   @UseGuards(AuthGuard("jwt"))
@@ -43,7 +43,7 @@ export class ReportsController {
   @UseGuards(AuthGuard("jwt"), RolesGuard)
   @Roles("admin")
   update(@Param("id") id: string, @Body() updateReportDto: UpdateReportDto) {
-    return this.reportsService.update(+id, updateReportDto);
+    return this.reportsService.update(id, updateReportDto);
   }
 
   @Get("estimate")

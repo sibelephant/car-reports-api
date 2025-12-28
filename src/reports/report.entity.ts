@@ -3,8 +3,8 @@ import { User } from '../users/user.entity';
 
 @Entity()
 export class Report {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   make: string;

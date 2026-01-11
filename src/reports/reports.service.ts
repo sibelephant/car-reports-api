@@ -31,9 +31,17 @@ export class ReportsService {
   }
 
   async getEstimate(make: string, model: string, year: number, mileage: number, lng: number, lat: number) {
-    const reports = await this.reportsRepository.find({
-      where: { make, model, approved: true },
-    });
+    const reports = await this.reportsRepository.createQueryBuilder()
+      .where('make = :make', { make })
+      .andWhere('model = :model', { model })
+      .andWhere('lng - :lng BETWEEN -5 AND 5', { lng })
+      .andWhere('lat - :lat BETWEEN -5 AND 5', { lat })
+      .andWhere('year - :year BETWEEN -3 AND 3', { year })
+      .andWhere('approved = :approved', { approved: true })
+      .orderBy('ABS(mileage - :mileage)', 'ASC')
+      .setParameters({ mileage })
+      .limit(3)
+      .getMany();
 
     if (reports.length === 0) {
       return { estimate: null, message: 'No data available for this car' };
